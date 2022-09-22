@@ -1,0 +1,32 @@
+{
+  "name": "bssl-fe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "background_script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikelAlejoBR/bssl-fe.git"
+  },
+  "keywords": [
+    "firefox-extension"
+  ],
+  "author": "MikelAlejoBR",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MikelAlejoBR/bssl-fe/issues"
+  },
+  "homepage": "https://github.com/MikelAlejoBR/bssl-fe#readme",
+  "devDependencies": {
+    "@types/webextension-polyfill": "^0.9.1",
+    "@types/websocket": "^1.0.5",
+    "copy-webpack-plugin": "^11.0.0",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.8.3",
+    "webextension-polyfill": "^0.10.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
+}

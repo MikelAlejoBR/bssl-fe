@@ -1,0 +1,19 @@
+{
+    "background": {
+        "scripts": [
+            "background_script.js"
+        ]
+    },
+    "browser_action": {
+        "default_icon": {
+            "64": "icons/icon.png"
+        },
+        "default_title": "bssl"
+    },
+    "icons": {
+        "64": "icons/icon.png"
+    },
+    "manifest_version": 2,
+    "name": "bssl",
+    "version": "0.0.1"
+}
