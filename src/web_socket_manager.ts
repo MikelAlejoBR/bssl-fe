@@ -1,4 +1,4 @@
-const address: string = 'ws://localhost:27745';
+const address = 'ws://localhost:27745';
 
 export class WebSocketManager {
     private socket!: WebSocket;
@@ -70,12 +70,11 @@ export class WebSocketManager {
     /**
      * Sends any messages that might have been piling up while the socket was
      * unavailable to send things.
-     * @param event "the socket is ready" event.
      */
-    private onOpen(event: Event): void {
+    private onOpen(): void {
         if (this.messages.length != 0) {
             for (let i = this.messages.length - 1; i >= 0; i--) {
-                let message = this.messages.pop();
+                const message = this.messages.pop();
 
                 if (message !== undefined) {
                     this.socket.send(message);
@@ -86,9 +85,8 @@ export class WebSocketManager {
 
     /**
      * Handler for when the socket yields an error.
-     * @param event the socket error event.
      */
-    private onError(event: Event): void {
+    private onError(): void {
         console.log('WebSocket error');
     }
 

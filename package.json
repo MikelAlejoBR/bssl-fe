@@ -4,6 +4,7 @@
   "description": "",
   "main": "background_script.js",
   "scripts": {
+    "lint": "eslint src/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,7 +23,10 @@
   "devDependencies": {
     "@types/webextension-polyfill": "^0.9.1",
     "@types/websocket": "^1.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.38.0",
+    "@typescript-eslint/parser": "^5.38.0",
     "copy-webpack-plugin": "^11.0.0",
+    "eslint": "^8.23.1",
     "ts-loader": "^9.4.1",
     "typescript": "^4.8.3",
     "webextension-polyfill": "^0.10.0",
