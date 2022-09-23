@@ -102,6 +102,8 @@ export class WebSocketManager {
             return;
         }
 
-        this.socket.send(message);
+        // Stringify the message to make sure that any JSON objects get sent as
+        // a string and not as an [object OBJECT].
+        this.socket.send(JSON.stringify(message));
     }
 }
