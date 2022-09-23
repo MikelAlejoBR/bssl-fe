@@ -1,6 +1,6 @@
-import browser, { tabs } from "webextension-polyfill";
-import { InternalMessageCode } from "../extension_message";
-import { WebSocketManager } from "../web_socket_manager";
+import browser, { tabs } from 'webextension-polyfill';
+import { InternalMessageCode } from '../extension_message';
+import { WebSocketManager } from '../web_socket_manager';
 
 // Bind the button click to the function that will send the information through
 // the web socket.
@@ -16,17 +16,15 @@ const wsm = new WebSocketManager();
  * Sends the relevant information through the web socket.
  */
 function extensionButtonClickListener(): void {
-
-    tabs.query({url: "https://www.bbc.co.uk/sounds/play/*"}).then(
+    tabs.query({url: 'https://www.bbc.co.uk/sounds/play/*'}).then(
         function (tabsResults: browser.Tabs.Tab[]){
             for (const tab of tabsResults) {
                 if (tab.id !== undefined) {
                     tabs.sendMessage(tab.id, InternalMessageCode.GET_ALL);
                 }
             }
-    });
-
-
+        }
+    );
 }
 
 /**
