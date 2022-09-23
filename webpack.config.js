@@ -5,7 +5,10 @@ const { SourceMapDevToolPlugin } = require('webpack');
 module.exports = {
     devtool: "source-map",
 
-    entry: './src/background_script.ts',
+    entry: {
+        content_script: { import: './src/content_scripts/content_script.ts', filename: 'content_script.js' },
+        background_script: { import: './src/background_scripts/background_script.ts', filename: 'background_script.js' },
+    },
 
     module: {
         rules: [
@@ -18,7 +21,7 @@ module.exports = {
     },
 
     output: {
-        filename: 'background_script.js',
+        filename: '[name][ext]',
         path: path.resolve(__dirname, 'dist'),
     },
 
