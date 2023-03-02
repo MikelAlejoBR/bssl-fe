@@ -64,7 +64,7 @@ export class WebSocketManager {
     private onClose(event: CloseEvent): void {
         this.initializedSocket = false;
 
-        console.log('Websocket closed: ' + event.reason);
+        //console.log('Websocket closed: ' + event.reason);
     }
 
     /**
@@ -87,7 +87,7 @@ export class WebSocketManager {
      * Handler for when the socket yields an error.
      */
     private onError(): void {
-        console.log('WebSocket error');
+        //console.log('WebSocket error');
     }
 
     /**

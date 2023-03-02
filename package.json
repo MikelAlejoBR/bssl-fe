@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/MikelAlejoBR/bssl-fe#readme",
   "devDependencies": {
+    "@types/randomstring": "^1.1.8",
+    "@types/uuid": "^9.0.1",
     "@types/webextension-polyfill": "^0.9.1",
     "@types/websocket": "^1.0.5",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
@@ -32,5 +34,13 @@
     "webextension-polyfill": "^0.10.0",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "base64url-ts2": "^2.0.1",
+    "buffer": "^6.0.3",
+    "depcheck": "^1.4.3",
+    "query-string": "^8.1.0",
+    "randomstring": "^1.2.3",
+    "uuid": "^9.0.0"
   }
 }
