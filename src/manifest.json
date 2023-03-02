@@ -10,6 +10,11 @@
         },
         "default_title": "bssl"
     },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{277d5080-9980-013b-5735-4af8fe4513f8}"
+        }
+    },
     "content_scripts": [
         {
             "matches": ["*://*.bbc.co.uk/sounds/play/*"],
@@ -21,7 +26,13 @@
     },
     "manifest_version": 2,
     "name": "bssl",
+    "options_ui": {
+        "browser_style": true,
+        "page": "options.html"
+    },
     "permissions": [
+        "identity",
+        "storage",
         "tabs"
     ],
     "version": "0.0.1"
