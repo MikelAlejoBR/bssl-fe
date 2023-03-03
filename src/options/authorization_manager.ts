@@ -29,7 +29,6 @@ export class AuthorizationManager {
             storage.local.get('authorization').then(
                 auth => {
                     if (Object.keys(auth).length === 0) {
-                        console.log('keys is zero, returning')
                         return;
                     }
 
