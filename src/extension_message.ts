@@ -1,6 +1,6 @@
 export enum InternalMessageCode {
     // Used for when the song list along with the time display are requested.
-    GET_ALL,
+    GET,
     // Used for when the message creation process didn't have any errors.
     OK,
 }
@@ -11,24 +11,18 @@ export enum InternalMessageCode {
  */
 export class InternalMessageResponse {
     private code: number;
-    private currentTime: string;
-    private playlistContents: string;
+    private spotifyTrackUuid: string;
 
-    constructor(code: number, currentTime: string, playlistContents: string) {
+    constructor(code: number, spotifyTrackUuid: string,) {
         this.code = code;
-        this.currentTime = currentTime;
-        this.playlistContents = playlistContents;
+        this.spotifyTrackUuid = spotifyTrackUuid;
     }
 
     public getCode(): number {
         return this.code;
     }
 
-    public getCurrentTime(): string {
-        return this.currentTime;
-    }
-
-    public getPlaylistContents(): string {
-        return this.playlistContents;
+    public getSpotifyTrackUuid(): string {
+        return this.spotifyTrackUuid;
     }
 }

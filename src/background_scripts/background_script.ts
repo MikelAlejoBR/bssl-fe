@@ -1,16 +1,12 @@
 import browser, { tabs } from 'webextension-polyfill';
-import { InternalMessageCode } from '../extension_message';
-import { WebSocketManager } from '../web_socket_manager';
+import { InternalMessageCode, InternalMessageResponse } from '../extension_message';
 
 // Bind the button click to the function that will send the information through
 // the web socket.
 browser.browserAction.onClicked.addListener(extensionButtonClickListener);
 
+// Add a listener for the incoming messages coming from the content script.
 browser.runtime.onMessage.addListener(contentScriptResponseHandler);
-
-// Create the web socket manager which we will use to keep the web socket
-// connection up for sending the information over.
-const wsm = new WebSocketManager();
 
 /**
  * Sends the relevant information through the web socket.
@@ -20,7 +16,7 @@ function extensionButtonClickListener(): void {
         function (tabsResults: browser.Tabs.Tab[]){
             for (const tab of tabsResults) {
                 if (tab.id !== undefined) {
-                    tabs.sendMessage(tab.id, InternalMessageCode.GET_ALL);
+                    tabs.sendMessage(tab.id, InternalMessageCode.GET);
                 }
             }
         }
@@ -32,6 +28,6 @@ function extensionButtonClickListener(): void {
  * websocket.
  * @param response the sent response from the c ontent script.
  */
-function contentScriptResponseHandler(response: string): void {
-    wsm.sendMessage(response);
+function contentScriptResponseHandler(response: InternalMessageResponse): void {
+    console.log(response);
 }
