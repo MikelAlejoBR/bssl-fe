@@ -1,7 +1,6 @@
-import { AccessToken } from './access_token';
+import { AccessToken } from './options/access_token';
 import { Buffer } from 'buffer';
 import { identity, storage } from 'webextension-polyfill';
-import { InteractiveArea } from './interactive_area';
 import queryString from 'query-string';
 import randomstring from 'randomstring';
 import {v4 as uuidv4} from 'uuid';
@@ -15,16 +14,13 @@ export class AuthorizationManager {
     private readonly codeChallengeLength: number = 128;
     private codeVerifier: string | undefined;
     private tokenGrantType = 'authorization_code';
-    private interactiveArea: InteractiveArea;
     private readonly redirectUri: string = identity.getRedirectURL();
     private readonly responseType: string = 'code';
     private readonly spotifyClientId: string = '67a169b755b94586bc5397f18f49822b';
     private readonly spotifyAccountsUrl: string = 'https://accounts.spotify.com';
     private state: string | undefined;
 
-    constructor(interactiveArea: InteractiveArea) {
-        this.interactiveArea = interactiveArea;
-
+    constructor() {
         if (!this.isAuthorized()) {
             storage.local.get('authorization').then(
                 auth => {
@@ -34,15 +30,9 @@ export class AuthorizationManager {
 
                     this.authorizationCode = auth.authorization.code;
                     this.codeChallenge = auth.authorization.challenge;
-
-                    this.interactiveArea.hideConnectButton();
-                    this.interactiveArea.displayLogoutButton();
                 }
             );
         }
-
-        this.interactiveArea.displayConnectButton();
-        this.interactiveArea.hideLogoutButton();
     }
 
     /**
@@ -78,7 +68,7 @@ export class AuthorizationManager {
                 // class' instance.
                 authorizationResponse.then(
                     (url) => this.onAuthorized(url),
-                    (errorMsg) => this.onUnauthorized(errorMsg)
+                    (errorMsg) => {throw new Error(`Unable to authorize to Spotify: ${errorMsg}`);},
                 );
             }
         );
@@ -88,7 +78,7 @@ export class AuthorizationManager {
      * Checks if the authorization has been already one.
      * @returns true if the authorization has already been done.
      */
-    private isAuthorized(): boolean {
+    public isAuthorized(): boolean {
         return this.authorizationCode != null && this.authorizationCode != undefined;
     }
 
@@ -104,29 +94,15 @@ export class AuthorizationManager {
         const state = spotifyResponse.query.state;
 
         if (authorizationCode === null) {
-            this.interactiveArea.postErrorMessage('Unable to authorize to Spotify: the received authorization code is empty.');
-            return;
+            throw new Error('Unable to authorize to Spotify: the received authorization code is empty.');
         }
 
         if (state != this.state) {
-            this.interactiveArea.postErrorMessage('Unable to authorize to Spotify: the received state is different to the sent one.');
-            return;
+            throw new Error('Unable to authorize to Spotify: the received state is different to the sent one.');
         }
         
         this.authorizationCode = authorizationCode;
         storage.local.set({authorization: {code: authorizationCode, challenge: this.codeChallenge}});
-
-        this.interactiveArea.clearErrorMessage();
-        this.interactiveArea.hideConnectButton();
-        this.interactiveArea.displayLogoutButton();
-    }
-
-    /**
-     * Tells the user why the authorization didn't succeed.
-     * @param errorMessage the error messsage to show to the user.
-     */
-    private onUnauthorized(errorMessage: string): void {
-        this.interactiveArea.postErrorMessage(`Unable to authorize to Spotify: ${errorMessage}`);
     }
 
     /**
@@ -212,7 +188,5 @@ export class AuthorizationManager {
      */
     public logout(): void {
         storage.local.clear();
-        this.interactiveArea.hideLogoutButton();
-        this.interactiveArea.displayConnectButton();
     }
 }
